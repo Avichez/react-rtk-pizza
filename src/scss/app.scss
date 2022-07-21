@@ -15,12 +15,16 @@ body {
     max-width: 1400px;
     @media (max-width: 810px) {
         width: calc(100vw - 20px);
-        margin: 20px auto;
+        margin: 10px auto;
     }
 }
 
 .content {
     padding: 40px 0;
+
+    @media (max-width: 414px) {
+        padding: 0 0 20px;
+    }
 
     &__title {
         margin: 35px 0;
@@ -64,6 +68,11 @@ body {
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+    @media (max-width: 414px) {
+        &__top {
+            flex-direction: column;
+        }
     }
 
     .content__title {
@@ -112,6 +121,11 @@ body {
             span {
                 color: darken($color: #b6b6b6, $amount: 50);
             }
+        }
+    }
+    @media (max-width: 414px) {
+        &__clear {
+            margin-top: 20px;
         }
     }
 
@@ -218,6 +232,25 @@ body {
         }
     }
 
+    @media (max-width: 414px) {
+        &__item {
+            flex-wrap: wrap;
+            justify-content: space-between;
+            row-gap: 15px;
+            &-img {
+                flex: 1 0 10%;
+                width: auto;
+            }
+            &-info {
+                flex: 1 0 70%;
+                width: auto;
+            }
+            &-count {
+                width: 100px;
+            }
+        }
+    }
+
     &__bottom {
         margin: 50px 0;
 
@@ -233,6 +266,12 @@ body {
                         color: $orange;
                     }
                 }
+            }
+        }
+
+        @media (max-width: 414px) {
+            &-details {
+                flex-direction: column;
             }
         }
 
@@ -278,6 +317,14 @@ body {
                 font-weight: 600;
                 width: 210px;
                 padding: 16px;
+            }
+        }
+
+        @media (max-width: 414px) {
+            &-buttons {
+                flex-direction: column-reverse;
+                align-items: center;
+                row-gap: 20px;
             }
         }
     }
