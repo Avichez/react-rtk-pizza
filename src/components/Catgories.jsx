@@ -1,9 +1,7 @@
 import React from "react";
 
 const Categories = (props) => {
-  const [activeCategory, setActiveCategory] = React.useState(1);
-
-  // const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+  const { activeCategory, setActiveCategory } = props;
   const categories = [
     { id: 1, name: 'Все' },
     { id: 2, name: 'Мясные' },
@@ -13,16 +11,16 @@ const Categories = (props) => {
     { id: 6, name: 'Закрытые' },
   ]
 
-  const chooseCategory = (id) => {
-    setActiveCategory(id);
-  }
+  // const chooseCategory = (id) => {
+  //   setActiveCategory(id);
+  // }
 
   return (
     <div className="categories">
       <ul>
         {
           categories.map((pizza) => (
-            <li key={pizza.id} onClick={() => chooseCategory(pizza.id)} className={activeCategory === pizza.id ? 'active' : ''}>{pizza.name}</li>
+            <li key={pizza.id} onClick={() => setActiveCategory(pizza.id)} className={activeCategory === pizza.id ? 'active' : ''}>{pizza.name}</li>
           ))
         }
       </ul>
