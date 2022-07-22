@@ -1,0 +1,36 @@
+.search_wrapper {
+    position: relative;
+    max-width: 400px;
+    width: 100%;
+}
+
+.search_icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+    width: 24px;
+    height: 24px;
+    opacity: 0.5;
+}
+
+.clearinput_icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    opacity: 0.5;
+}
+
+.input {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    width: 100%;
+    padding: 12px 40px;
+    font-size: 16px;
+    border-radius: 1rem;
+    &:focus {
+        border: 1px solid rgba(0, 0, 0, 0.4);
+    }
+}

@@ -9,7 +9,6 @@ const Home = () => {
     const [isLoading, setLoading] = useState(true);
     const [activeCategory, setActiveCategory] = React.useState(1);
     const [sortItem, setSortItem] = useState({ id: 1, name: 'популярности', sort: 'rating' });
-    console.log(sortItem);
 
 
 
