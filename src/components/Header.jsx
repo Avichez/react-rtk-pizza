@@ -4,7 +4,6 @@ import pizzaLogo from '../assets/img/pizza-logo.svg';
 import Search from "./Search";
 
 const Header = (props) => {
-  const { searchInput, setSearchInput } = props;
   return (
     <div className="header">
       <div className="container">
@@ -17,7 +16,7 @@ const Header = (props) => {
             </div>
           </div>
         </Link>
-        <Search searchInput={searchInput} setSearchInput={setSearchInput} />
+        <Search />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>520 ₽</span>

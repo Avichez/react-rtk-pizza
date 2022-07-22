@@ -4,9 +4,11 @@ import Sort from "../components/Sort";
 import PizzaItem from "../components/PizzaItems";
 import Skeleton from "../components/PizzaItems/Skeleton";
 import Pagination from '../components/Pagination';
+import { useContext } from 'react';
+import { SearchContext } from '../App';
 
 const Home = (props) => {
-    const { searchInput } = props;
+    const { searchInput } = useContext(SearchContext);
     const [items, setItems] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
