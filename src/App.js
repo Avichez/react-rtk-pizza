@@ -15,7 +15,7 @@ const App = () => {
             <Header searchInput={searchInput} setSearchInput={setSearchInput} />
             <div className="content">
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element={<Home searchInput={searchInput} />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
