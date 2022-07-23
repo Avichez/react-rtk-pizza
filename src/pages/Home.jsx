@@ -14,6 +14,7 @@ const Home = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [activeCategory, setActiveCategory] = React.useState(1);
     const [sortItem, setSortItem] = useState({ id: 1, name: 'популярности', sort: 'rating' });
+    const [pageCount, setPageCount] = useState(0);
 
 
 
@@ -27,7 +28,8 @@ const Home = (props) => {
         fetch(`https://62a8c6edec36bf40bdadcca5.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortItem.sort}${order}${category}${search}`)
             .then((response) => response.json())
             .then((data) => {
-                data && setItems(data);
+                data && setItems(data.items);
+                setPageCount(Math.ceil(data.count / 4));
                 setLoading(false);
             });
         window.scrollTo(0, 0);
@@ -44,10 +46,10 @@ const Home = (props) => {
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
                 {isLoading
-                    ? [...new Array(8)].map((_, index) => <Skeleton key={index} />)
+                    ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
                     : pizzas}
             </div>
-            <Pagination setCurrentPage={setCurrentPage} />
+            <Pagination setCurrentPage={setCurrentPage} pageCount={pageCount} />
         </div>
     )
 }
