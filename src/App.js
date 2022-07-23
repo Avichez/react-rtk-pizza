@@ -11,12 +11,10 @@ export const SearchContext = React.createContext();
 
 const App = () => {
     const [searchInput, setSearchInput] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
 
     return (
         <div className="wrapper">
-            <SearchContext.Provider
-                value={{ searchInput, setSearchInput, currentPage, setCurrentPage }}>
+            <SearchContext.Provider value={{ searchInput, setSearchInput }}>
                 <Header />
                 <div className="content">
                     <Routes>

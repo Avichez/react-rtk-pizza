@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { setSortItem } from '../redux/slices/filterSlice';
+
+
+const sortList = [
+  { id: 1, name: 'популярности', sort: 'rating' },
+  { id: 2, name: 'цена по убыванию', sort: 'price', order: 'desc' },
+  { id: 3, name: 'цена по возрастанию', sort: 'price', order: 'asc' },
+  { id: 4, name: 'алфавиту', sort: 'title' },
+];
 
 const Sort = (props) => {
-  const { sortItem, setSortItem } = props;
+  const { sortItems } = props;
   const [isVisible, setIsVisible] = useState(false);
-  const sortList = [
-    { id: 1, name: 'популярности', sort: 'rating' },
-    { id: 2, name: 'цена по убыванию', sort: 'price', addSort: 'desc' },
-    { id: 3, name: 'цена по возрастанию', sort: 'price', addSort: 'asc' },
-    { id: 4, name: 'алфавиту', sort: 'title' },
-  ];
 
-  const onClickSortItem = (obj) => {
-    setSortItem(obj);
+  const dispatch = useDispatch();
+
+  const onClickSortItem = (item) => {
+    dispatch(setSortItem(item));
     setIsVisible(false);
   }
 
@@ -30,7 +36,7 @@ const Sort = (props) => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsVisible(!isVisible)}>{sortItem.name}</span>
+        <span onClick={() => setIsVisible(!isVisible)}>{sortItems.name}</span>
       </div>
       {
         isVisible && (
@@ -38,7 +44,7 @@ const Sort = (props) => {
             <ul>
               {
                 sortList.map((item) => (
-                  <li key={item.id} onClick={() => onClickSortItem(item)} className={sortItem.id === item.id ? 'active' : ''}>{item.name}</li>
+                  <li key={item.id} onClick={() => onClickSortItem(item)} className={sortItems.id === item.id ? 'active' : ''}>{item.name}</li>
                 ))
               }
             </ul>
