@@ -8,10 +8,9 @@ import { useContext } from 'react';
 import { SearchContext } from '../App';
 
 const Home = (props) => {
-    const { searchInput } = useContext(SearchContext);
+    const { searchInput, currentPage, setCurrentPage } = useContext(SearchContext);
     const [items, setItems] = useState([]);
     const [isLoading, setLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
     const [activeCategory, setActiveCategory] = React.useState(1);
     const [sortItem, setSortItem] = useState({ id: 1, name: 'популярности', sort: 'rating' });
     const [pageCount, setPageCount] = useState(0);
