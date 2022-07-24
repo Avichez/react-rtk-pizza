@@ -13,7 +13,7 @@ export const paginationSlice = createSlice({
             state.currentPage = action.payload;
         },
         setPagesCount: (state, action) => {
-            state.pagesCount = action.payload;
+            state.pagesCount = Math.ceil(action.payload / 4);
         },
     },
 });

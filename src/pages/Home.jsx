@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaItem from "../components/PizzaItems";
@@ -25,11 +26,10 @@ const Home = (props) => {
         const category = activeCategory === 1 ? '' : `&category=${activeCategory}`;
         const order = sortItems.order ? `&order=${sortItems.order}` : '';
 
-        fetch(`https://62a8c6edec36bf40bdadcca5.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortItems.sort}${order}${category}${search}`)
-            .then((response) => response.json())
-            .then((data) => {
-                data && setItems(data.items);
-                dispatch(setPagesCount(Math.ceil(data.count / 4)));
+        axios.get(`https://62a8c6edec36bf40bdadcca5.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortItems.sort}${order}${category}${search}`)
+            .then((res) => {
+                setItems(res.data.items);
+                dispatch(setPagesCount(res.data.count));
                 setLoading(false);
             });
         window.scrollTo(0, 0);
