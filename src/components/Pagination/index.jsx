@@ -2,11 +2,11 @@ import React from 'react';
 import styles from './Pagination.module.scss';
 import ReactPaginate from 'react-paginate';
 import { setCurrentPage } from '../../redux/slices/paginationSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Pagination = (props) => {
-    const { pagesCount } = props;
+    const pagesCount = useSelector(state => state.pagination.pagesCount);
     const dispatch = useDispatch();
     return (
         <>

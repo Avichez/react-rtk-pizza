@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from 'react-redux';
 import { setActiveCategory } from "../redux/slices/filterSlice";
+import { setCurrentPage } from "../redux/slices/paginationSlice";
 
 const categories = [
   { id: 1, name: 'Все' },
@@ -15,12 +16,17 @@ const Categories = (props) => {
   const { activeCategory } = props;
   const dispatch = useDispatch();
 
+  const onClickActiveCategory = (id) => {
+    dispatch(setActiveCategory(id));
+    dispatch(setCurrentPage(1));
+  }
+
   return (
     <div className="categories">
       <ul>
         {
           categories.map((pizza) => (
-            <li key={pizza.id} onClick={() => dispatch(setActiveCategory(pizza.id))} className={activeCategory === pizza.id ? 'active' : ''}>{pizza.name}</li>
+            <li key={pizza.id} onClick={() => onClickActiveCategory(pizza.id)} className={activeCategory === pizza.id ? 'active' : ''}>{pizza.name}</li>
           ))
         }
       </ul>

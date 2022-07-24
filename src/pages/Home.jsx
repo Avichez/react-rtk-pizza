@@ -6,15 +6,16 @@ import Skeleton from "../components/PizzaItems/Skeleton";
 import Pagination from '../components/Pagination';
 import { useContext } from 'react';
 import { SearchContext } from '../App';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setPagesCount } from '../redux/slices/paginationSlice';
 
 const Home = (props) => {
     const { searchInput, } = useContext(SearchContext);
     const [items, setItems] = useState([]);
     const [isLoading, setLoading] = useState(true);
-    const [pagesCount, setPagsCount] = useState(0);
     const currentPage = useSelector(state => state.pagination.currentPage);
     const { activeCategory, sortItems } = useSelector((state) => state.filter);
+    const dispatch = useDispatch();
 
 
     // https://62a8c6edec36bf40bdadcca5.mockapi.io/items
@@ -28,7 +29,7 @@ const Home = (props) => {
             .then((response) => response.json())
             .then((data) => {
                 data && setItems(data.items);
-                setPagsCount(Math.ceil(data.count / 4));
+                dispatch(setPagesCount(Math.ceil(data.count / 4)));
                 setLoading(false);
             });
         window.scrollTo(0, 0);
@@ -49,7 +50,7 @@ const Home = (props) => {
                     ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
                     : pizzas}
             </div>
-            <Pagination pagesCount={pagesCount} />
+            <Pagination />
         </div>
     )
 }
