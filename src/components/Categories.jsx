@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch } from 'react-redux';
-import { setActiveCategory } from "../redux/slices/filterSlice";
-import { setCurrentPage } from "../redux/slices/paginationSlice";
+import { setActiveCategory, setCurrentPage } from "../redux/slices/filterSlice";
 
 const categories = [
   { id: 1, name: 'Все' },

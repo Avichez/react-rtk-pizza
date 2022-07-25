@@ -2,7 +2,7 @@ import React from 'react'
 import { useContext } from 'react';
 import { SearchContext } from '../../App';
 import styles from './Search.module.scss';
-import { setCurrentPage } from "../../redux/slices/paginationSlice";
+import { setCurrentPage } from "../../redux/slices/filterSlice";
 import { useDispatch } from 'react-redux';
 import { useRef, useMemo } from 'react';
 import debounce from 'lodash.debounce'
