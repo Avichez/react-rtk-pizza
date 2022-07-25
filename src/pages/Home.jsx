@@ -88,7 +88,7 @@ const Home = (props) => {
         <div className="container">
             <div className="content__top">
                 <Categories activeCategory={activeCategory} />
-                <Sort sortItems={sortItems} />
+                <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">

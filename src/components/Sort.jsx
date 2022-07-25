@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useState, useRef } from 'react'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSortItem } from '../redux/slices/filterSlice';
 
 
@@ -11,8 +12,9 @@ export const sortList = [
 ];
 
 const Sort = (props) => {
-  const { sortItems } = props;
+  const sortItems = useSelector(state => state.filter.sortItems);
   const [isVisible, setIsVisible] = useState(false);
+  const sortRef = useRef();
 
   const dispatch = useDispatch();
 
@@ -21,8 +23,23 @@ const Sort = (props) => {
     setIsVisible(false);
   }
 
+  useEffect(() => {
+    const handleclickOutside = (event) => {
+      if (!event.path.includes(sortRef.current)) {
+        setIsVisible(false);
+      }
+    }
+
+    document.body.addEventListener("click", handleclickOutside);
+
+    // данная функция вызывается по принципу willUnmount
+    return () => {
+      document.body.removeEventListener("click", handleclickOutside);
+    }
+  }, [])
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"

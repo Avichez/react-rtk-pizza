@@ -24,7 +24,6 @@ export const filterSlice = createSlice({
             state.currentPage = action.payload;
         },
         setFilters: (state, action) => {
-            console.log(action.payload);
             state.currentPage = Number(action.payload.page);
             state.activeCategory = Number(action.payload.category);
             state.sortItems = action.payload.sortBy;
