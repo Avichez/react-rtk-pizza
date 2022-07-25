@@ -5,10 +5,10 @@ import { addItem } from "../../redux/slices/cartSlice";
 const PizzaItem = (props) => {
   const { id, imageUrl, title, price, sizes, types } = props;
   const dispatch = useDispatch();
-  const addedItem = useSelector(state => state.cart.items.find((obj) => obj.id === id));
   const [pizzaSize, setPizzaSize] = useState(0);
   const [activeType, setActiveType] = useState(0);
   const typeNames = ['Тонкое', 'традиционное'];
+  const addedItem = useSelector(state => state.cart.items.find((obj) => obj.id === id));
 
   const countAddItem = addedItem ? addedItem.count : 0;
 
@@ -19,7 +19,7 @@ const PizzaItem = (props) => {
       price,
       imageUrl,
       type: typeNames[activeType],
-      size: pizzaSize,
+      size: sizes[pizzaSize],
     };
     dispatch(addItem(item));
   }

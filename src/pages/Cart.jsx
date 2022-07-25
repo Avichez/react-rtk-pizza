@@ -43,9 +43,7 @@ const Cart = () => {
                 </div>
                 <div class="cart__items">
                     {
-                        items.length ?
-                            items.map((item) => <CartItem key={item.id} {...item} />)
-                            : (<div style={{ textAlign: "center" }}> Коризина пуста </div>)
+                        items.map((item) => <CartItem key={item.id} {...item} />)
                     }
                 </div>
                 <div class="cart__bottom">

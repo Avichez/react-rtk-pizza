@@ -3,21 +3,28 @@ import { useDispatch } from 'react-redux'
 import { addItem, removeItem, cancelItem } from '../redux/slices/cartSlice'
 
 const CartItem = (props) => {
-    const { id, price, title, count, imageUrl, type } = props;
+    const { id, price, title, count, imageUrl, type, size } = props;
     const dispatch = useDispatch();
 
     const handlerPlus = () => {
         dispatch(addItem({
             id,
+            size,
         }))
     };
 
     const handlerMinus = () => {
-        dispatch(removeItem(id));
+        dispatch(removeItem({
+            id,
+            size
+        }));
     };
 
     const handleRemoveItem = () => {
-        dispatch(cancelItem(id))
+        dispatch(cancelItem({
+            id,
+            size
+        }))
     }
 
     return (
@@ -27,7 +34,7 @@ const CartItem = (props) => {
             </div>
             <div class="cart__item-info">
                 <h3>{title}</h3>
-                <p>{type} тесто, 26 см.</p>
+                <p>{type} тесто, {size} см.</p>
             </div>
             <div class="cart__item-count">
                 <div class="button button--outline button--circle cart__item-count-minus" onClick={handlerMinus}>
