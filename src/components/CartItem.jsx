@@ -9,22 +9,15 @@ const CartItem = (props) => {
     const handlerPlus = () => {
         dispatch(addItem({
             id,
-            size,
         }))
     };
 
     const handlerMinus = () => {
-        dispatch(removeItem({
-            id,
-            size
-        }));
+        dispatch(removeItem(id));
     };
 
     const handleRemoveItem = () => {
-        dispatch(cancelItem({
-            id,
-            size
-        }))
+        dispatch(cancelItem(id))
     }
 
     return (
