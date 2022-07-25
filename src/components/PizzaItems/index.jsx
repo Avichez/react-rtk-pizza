@@ -8,9 +8,10 @@ const PizzaItem = (props) => {
   const [pizzaSize, setPizzaSize] = useState(0);
   const [activeType, setActiveType] = useState(0);
   const typeNames = ['Тонкое', 'традиционное'];
-  const addedItem = useSelector(state => state.cart.items.find((obj) => obj.id === id));
+  const addedItem = useSelector(state => state.cart.items.filter((obj) => obj.id === id))
+    .reduce((sum, obj) => obj.count + sum, 0);
 
-  const countAddItem = addedItem ? addedItem.count : 0;
+  const countAddItem = addedItem ? addedItem : 0;
 
   const onclickAdd = () => {
     const item = {
