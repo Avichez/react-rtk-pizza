@@ -23,18 +23,22 @@ const Home = (props) => {
     const { activeCategory, sortItems, currentPage } = useSelector((state) => state.filter);
 
 
-    const fetchPizzas = () => {
+    const fetchPizzas = async () => {
         setLoading(true);
         const search = searchInput ? `&search=${searchInput}` : '';
         const category = activeCategory === 1 ? '' : `&category=${activeCategory}`;
         const order = sortItems.order ? `&order=${sortItems.order}` : '';
 
-        axios.get(`https://62a8c6edec36bf40bdadcca5.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortItems.sort}${order}${category}${search}`)
-            .then((res) => {
-                setItems(res.data.items);
-                dispatch(setPagesCount(res.data.count));
-                setLoading(false);
-            });
+        try {
+            const response = await axios.get(`https://62a8c6edec36bf40bdadcca5.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortItems.sort}${order}${category}${search}`);
+            setItems(response.data.items);
+            dispatch(setPagesCount(response.data.count));
+        } catch (error) {
+            console.log("Catch Error", error);
+        } finally {
+            setLoading(false);
+        }
+
     }
 
     // берем данные из url поля и парсим их в параметры, затем передаем через setFilters в наш state обновляя его и загружая контент изходя из полученой ссылки.
