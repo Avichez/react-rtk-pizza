@@ -11,6 +11,7 @@ import { SearchContext } from '../App';
 import { useSelector, useDispatch } from "react-redux";
 import { setPagesCount } from '../redux/slices/paginationSlice';
 import { setFilters } from '../redux/slices/filterSlice';
+import { setItems } from '../redux/slices/setPizzasSlice';
 
 const Home = (props) => {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Home = (props) => {
     const isSearch = useRef(false);
     const isMounted = useRef(false);
     const { searchInput, } = useContext(SearchContext);
-    const [items, setItems] = useState([]);
+    const items = useSelector(state => state.pizzas.items)
     const [isLoading, setLoading] = useState(true);
     const { activeCategory, sortItems, currentPage } = useSelector((state) => state.filter);
 
@@ -30,9 +31,9 @@ const Home = (props) => {
         const order = sortItems.order ? `&order=${sortItems.order}` : '';
 
         try {
-            const response = await axios.get(`https://62a8c6edec36bf40bdadcca5.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortItems.sort}${order}${category}${search}`);
-            setItems(response.data.items);
-            dispatch(setPagesCount(response.data.count));
+            const { data } = await axios.get(`https://62a8c6edec36bf40bdadcca5.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortItems.sort}${order}${category}${search}`);
+            dispatch(setItems(data.items));
+            dispatch(setPagesCount(data.count));
         } catch (error) {
             console.log("Catch Error", error);
         } finally {
