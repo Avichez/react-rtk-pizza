@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import Categories from "../components/Categories";
@@ -9,9 +8,8 @@ import Skeleton from "../components/PizzaItems/Skeleton";
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 import { useSelector, useDispatch } from "react-redux";
-import { setPagesCount } from '../redux/slices/paginationSlice';
 import { setFilters } from '../redux/slices/filterSlice';
-import { setItems } from '../redux/slices/setPizzasSlice';
+import { fetchPizzas } from '../redux/slices/setPizzaSlice';
 
 const Home = (props) => {
     const navigate = useNavigate();
@@ -24,16 +22,18 @@ const Home = (props) => {
     const { activeCategory, sortItems, currentPage } = useSelector((state) => state.filter);
 
 
-    const fetchPizzas = async () => {
+    const getPizzas = async () => {
         setLoading(true);
         const search = searchInput ? `&search=${searchInput}` : '';
         const category = activeCategory === 1 ? '' : `&category=${activeCategory}`;
         const order = sortItems.order ? `&order=${sortItems.order}` : '';
+        const sortBy = sortItems.sort ? `&sortBy=${sortItems.sort}` : '';
 
         try {
-            const { data } = await axios.get(`https://62a8c6edec36bf40bdadcca5.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortItems.sort}${order}${category}${search}`);
-            dispatch(setItems(data.items));
-            dispatch(setPagesCount(data.count));
+            dispatch(fetchPizzas({ category, order, sortBy, search, currentPage }));
+            // const { data } = await axios.get(`https://62a8c6edec36bf40bdadcca5.mockapi.io/items?page=${currentPage}&limit=4${sortBy}${order}${category}${search}`);
+            // dispatch(setItems(data.items));
+            // dispatch(setPagesCount(data.count));
         } catch (error) {
             console.log("Catch Error", error);
         } finally {
@@ -62,7 +62,7 @@ const Home = (props) => {
         window.scrollTo(0, 0);
 
         if (!isSearch.current) {
-            fetchPizzas();
+            getPizzas();
         }
 
         isSearch.current = false;

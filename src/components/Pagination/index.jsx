@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 const Pagination = (props) => {
-    const pagesCount = useSelector(state => state.pagination.pagesCount);
+    const pagesCount = useSelector(state => state.pizzas.pagesCount);
     const currentPage = useSelector(state => state.filter.currentPage);
     const dispatch = useDispatch();
 
