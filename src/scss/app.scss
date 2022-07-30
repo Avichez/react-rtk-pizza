@@ -26,6 +26,17 @@ body {
         padding: 0 0 20px;
     }
 
+    &__error {
+        margin: 100px auto;
+        text-align: center;
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+    }
+
     &__title {
         margin: 35px 0;
     }

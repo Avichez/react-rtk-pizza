@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import React, { useEffect, useRef } from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import Categories from "../components/Categories";
@@ -6,9 +6,8 @@ import Sort, { sortList } from "../components/Sort";
 import PizzaItem from "../components/PizzaItems";
 import Skeleton from "../components/PizzaItems/Skeleton";
 import Pagination from '../components/Pagination';
-import { SearchContext } from '../App';
 import { useSelector, useDispatch } from "react-redux";
-import { setFilters } from '../redux/slices/filterSlice';
+import { setFilters, filterSelector } from '../redux/slices/filterSlice';
 import { fetchPizzas } from '../redux/slices/setPizzaSlice';
 
 const Home = (props) => {
@@ -16,30 +15,23 @@ const Home = (props) => {
     const dispatch = useDispatch();
     const isSearch = useRef(false);
     const isMounted = useRef(false);
-    const { searchInput, } = useContext(SearchContext);
-    const items = useSelector(state => state.pizzas.items)
-    const [isLoading, setLoading] = useState(true);
-    const { activeCategory, sortItems, currentPage } = useSelector((state) => state.filter);
+    const { items, loadingStatus } = useSelector(state => state.pizzas)
+    const { activeCategory, sortItems, currentPage, searchValue } = useSelector(filterSelector);
 
 
     const getPizzas = async () => {
-        setLoading(true);
-        const search = searchInput ? `&search=${searchInput}` : '';
+        const search = searchValue ? `&search=${searchValue}` : '';
         const category = activeCategory === 1 ? '' : `&category=${activeCategory}`;
         const order = sortItems.order ? `&order=${sortItems.order}` : '';
         const sortBy = sortItems.sort ? `&sortBy=${sortItems.sort}` : '';
 
-        try {
-            dispatch(fetchPizzas({ category, order, sortBy, search, currentPage }));
-            // const { data } = await axios.get(`https://62a8c6edec36bf40bdadcca5.mockapi.io/items?page=${currentPage}&limit=4${sortBy}${order}${category}${search}`);
-            // dispatch(setItems(data.items));
-            // dispatch(setPagesCount(data.count));
-        } catch (error) {
-            console.log("Catch Error", error);
-        } finally {
-            setLoading(false);
-        }
+        dispatch(fetchPizzas({ category, order, sortBy, search, currentPage }));
 
+        // try {
+        //     dispatch(fetchPizzas({ category, order, sortBy, search, currentPage }));
+        // } catch (error) {
+        //     console.log("Catch Error", error);
+        // }
     }
 
     // берем данные из url поля и парсим их в параметры, затем передаем через setFilters в наш state обновляя его и загружая контент изходя из полученой ссылки.
@@ -68,7 +60,7 @@ const Home = (props) => {
         isSearch.current = false;
 
         // eslint-disable-next-line
-    }, [activeCategory, sortItems, searchInput, currentPage]);
+    }, [activeCategory, sortItems, searchValue, currentPage]);
 
     // вшитие параметров в url будет происходить только при втором и последующих рендарах страницы.
     useEffect(() => {
@@ -96,11 +88,21 @@ const Home = (props) => {
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-                {isLoading
-                    ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
-                    : pizzas}
-            </div>
+            {
+                loadingStatus === "error"
+                    ? <div className='content__error'>
+                        <h2>Произошла ошибка <icon>😕</icon></h2>
+                        <p>
+                            К сожалению не удалось получить пиццы<br />
+                            Пожалуйста повторите попытку.
+                        </p>
+                    </div>
+                    : <div className="content__items">
+                        {loadingStatus === 'loading'
+                            ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
+                            : pizzas}
+                    </div>
+            }
             <Pagination />
         </div>
     )

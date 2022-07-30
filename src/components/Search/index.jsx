@@ -1,8 +1,6 @@
 import React from 'react'
-import { useContext } from 'react';
-import { SearchContext } from '../../App';
 import styles from './Search.module.scss';
-import { setCurrentPage } from "../../redux/slices/filterSlice";
+import { setCurrentPage, setSearchValue } from "../../redux/slices/filterSlice";
 import { useDispatch } from 'react-redux';
 import { useRef, useMemo } from 'react';
 import debounce from 'lodash.debounce'
@@ -10,14 +8,13 @@ import { useState } from 'react';
 
 
 const Search = (props) => {
-    const { setSearchInput } = useContext(SearchContext);
     const [inputValue, setInputValue] = useState('');
     const dispatch = useDispatch();
     const inputRef = useRef();
 
     const inputDebounce = useMemo(() =>
         debounce((value) => {
-            setSearchInput(value)
+            dispatch(setSearchValue(value));
         }, 500),
         // eslint-disable-next-line
         []);
@@ -30,7 +27,7 @@ const Search = (props) => {
     }
 
     const onClickClearBtn = () => {
-        setSearchInput('');
+        dispatch(setSearchValue(''));
         setInputValue('');
         inputRef.current.focus();
     }
