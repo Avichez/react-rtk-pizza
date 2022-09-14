@@ -1,14 +1,12 @@
-import React from 'react'
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
-import { useState } from 'react';
 
 const PizzaInfo = (props) => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [pizzaData, setPizzaData] = useState({});
     const { title, price, imageUrl } = pizzaData;
-    console.log(pizzaData);
 
     const getPizzaInfo = async () => {
         try {
@@ -16,6 +14,8 @@ const PizzaInfo = (props) => {
             setPizzaData(data);
         } catch (error) {
             console.log(error, 'catch error');
+            alert("There is no such pizza here");
+            navigate("/");
         }
     }
 
