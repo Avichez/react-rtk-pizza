@@ -1,12 +1,11 @@
-import React from 'react';
-import styles from './Pagination.module.scss';
-import ReactPaginate from 'react-paginate';
-import { setCurrentPage, filterSelector } from '../../redux/slices/filterSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+import styles from "./Pagination.module.scss";
+import ReactPaginate from "react-paginate";
+import { setCurrentPage, filterSelector } from "../../redux/slices/filterSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-
-const Pagination = (props) => {
-    const pagesCount = useSelector(state => state.pizzas.pagesCount);
+const Pagination: React.FC = () => {
+    const pagesCount = useSelector((state: any) => state.pizzas.pagesCount); // to fix it later on;
     const { currentPage } = useSelector(filterSelector);
     const dispatch = useDispatch();
 
@@ -21,10 +20,9 @@ const Pagination = (props) => {
                 pageCount={pagesCount}
                 forcePage={currentPage - 1}
                 previousLabel="<"
-                renderOnZeroPageCount={null}
             />
         </>
-    )
-}
+    );
+};
 
 export default Pagination;

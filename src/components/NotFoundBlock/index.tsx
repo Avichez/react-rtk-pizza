@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './NotFoundBlock.module.scss';
+import React from "react";
+import styles from "./NotFoundBlock.module.scss";
 
-const NotFoundBlock = () => {
+const NotFoundBlock: React.FC = () => {
     return (
         <div className={styles.root}>
             <h1>
@@ -11,8 +11,7 @@ const NotFoundBlock = () => {
             </h1>
             <p className={styles.description}>Currently this page is not working!</p>
         </div>
-
-    )
-}
+    );
+};
 
 export default NotFoundBlock;

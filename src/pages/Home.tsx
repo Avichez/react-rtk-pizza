@@ -8,14 +8,14 @@ import PizzaItem from "../components/PizzaItems";
 import Skeleton from "../components/PizzaItems/Skeleton";
 import Pagination from "../components/Pagination";
 import { setFilters, filterSelector } from "../redux/slices/filterSlice";
-import { fetchPizzas } from "../redux/slices/setPizzaSlice";
+import { fetchPizzas, pizzasList } from "../redux/slices/setPizzaSlice";
 
-const Home = (props) => {
+const Home: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const isSearch = useRef(false);
     const isMounted = useRef(false);
-    const { items, loadingStatus } = useSelector((state) => state.pizzas);
+    const { items, loadingStatus } = useSelector(pizzasList);
     const { activeCategory, sortItems, currentPage, searchValue } = useSelector(filterSelector);
 
     const getPizzas = async () => {
@@ -24,7 +24,10 @@ const Home = (props) => {
         const order = sortItems.order ? `&order=${sortItems.order}` : "";
         const sortBy = sortItems.sort ? `&sortBy=${sortItems.sort}` : "";
 
-        dispatch(fetchPizzas({ category, order, sortBy, search, currentPage }));
+        dispatch(
+            // @ts-ignore
+            fetchPizzas({ category, order, sortBy, search, currentPage }),
+        ); // to fix it later on
     };
 
     // берем данные из url поля и парсим их в параметры, затем передаем через setFilters в наш state обновляя его и отображая контент в соответствии.
@@ -32,14 +35,15 @@ const Home = (props) => {
         if (window.location.search) {
             const params = qs.parse(window.location.search.substring(1));
 
-            const sortBy = sortList.find(
+            const sortItems = sortList.find(
                 (obj) => obj.sort === params.sortBy && obj.order === params.order,
             );
 
             dispatch(
                 setFilters({
-                    ...params,
-                    sortBy,
+                    currentPage: Number(params.page),
+                    activeCategory: Number(params.category),
+                    sortItems: sortItems ? sortItems : sortList[0],
                 }),
             );
             isSearch.current = true;
@@ -75,7 +79,7 @@ const Home = (props) => {
         // eslint-disable-next-line
     }, [activeCategory, sortItems, currentPage]);
 
-    const pizzas = items.map((item) => <PizzaItem key={item.id} {...item} />);
+    const pizzas = items.map((item: any) => <PizzaItem key={item.id} {...item} />); // to fix later on
 
     return (
         <div className="container">
@@ -87,7 +91,7 @@ const Home = (props) => {
             {loadingStatus === "error" ? (
                 <div className="content__error">
                     <h2>
-                        Произошла ошибка <icon>😕</icon>
+                        Произошла ошибка <span>😕</span>
                     </h2>
                     <p>
                         К сожалению не удалось получить пиццы

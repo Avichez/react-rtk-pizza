@@ -10,3 +10,6 @@ export const store = configureStore({
         pizzas,
     },
 });
+
+// типизируем наш глобал state.
+export type RootState = ReturnType<typeof store.getState>;
