@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useCallback } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSortItem, filterSelector } from "../redux/slices/filterSlice";
@@ -17,17 +18,18 @@ export const sortList: TSortList[] = [
     { id: 4, name: "алфавиту", sort: "title" },
 ];
 
-const Sort: React.FC = () => {
+const Sort: React.FC = React.memo(() => {
     const { sortItems } = useSelector(filterSelector);
     const [isVisible, setIsVisible] = useState(false);
     const sortRef = useRef<HTMLDivElement>(null);
 
     const dispatch = useDispatch();
 
-    const onClickSortItem = (item: TSortList) => {
+    const onClickSortItem = useCallback((item: TSortList) => {
         dispatch(setSortItem(item));
         setIsVisible(false);
-    };
+        // eslint-disable-next-line
+    }, []);
 
     useEffect(() => {
         const handleclickOutside = (event: MouseEvent) => {
@@ -77,6 +79,6 @@ const Sort: React.FC = () => {
             )}
         </div>
     );
-};
+});
 
 export default Sort;

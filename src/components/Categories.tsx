@@ -21,7 +21,7 @@ type TCategoriesProps = {
 };
 
 // React.FC<CategoriesProps> - Таким образом мы автоматически типизируем props , добавив в <наш type>;
-const Categories: React.FC<TCategoriesProps> = (props) => {
+const Categories: React.FC<TCategoriesProps> = React.memo((props) => {
     const { activeCategory } = props;
     const dispatch = useDispatch();
 
@@ -44,6 +44,6 @@ const Categories: React.FC<TCategoriesProps> = (props) => {
             </ul>
         </div>
     );
-};
+});
 
 export default Categories;

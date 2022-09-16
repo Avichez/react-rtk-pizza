@@ -40,7 +40,6 @@ export const filterSlice = createSlice({
             state.currentPage = action.payload;
         },
         setFilters: (state, action: PayloadAction<IFilterSliceState>) => {
-            console.log(action.payload);
             state.currentPage = Number(action.payload.currentPage);
             state.activeCategory = Number(action.payload.activeCategory);
             state.sortItems = action.payload.sortItems;

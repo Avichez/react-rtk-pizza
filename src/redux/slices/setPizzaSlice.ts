@@ -64,19 +64,16 @@ export const setPizzasSlice = createSlice({
             state.items = [];
             state.pagesCount = 0;
             state.loadingStatus = Status.LOADING;
-            console.log("Ожидание");
         });
         builder.addCase(fetchPizzas.fulfilled, (state, action) => {
             state.items = action.payload.items;
             state.pagesCount = Math.ceil(action.payload.count / 4);
             state.loadingStatus = Status.SUCCESS;
-            console.log("Пришел ответ");
         });
         builder.addCase(fetchPizzas.rejected, (state) => {
             state.items = [];
             state.pagesCount = 0;
             state.loadingStatus = Status.ERROR;
-            console.log("Ошибка!");
         });
     },
 });
