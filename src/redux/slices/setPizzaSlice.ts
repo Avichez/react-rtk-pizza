@@ -62,7 +62,6 @@ export const setPizzasSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchPizzas.pending, (state) => {
             state.items = [];
-            state.pagesCount = 0;
             state.loadingStatus = Status.LOADING;
         });
         builder.addCase(fetchPizzas.fulfilled, (state, action) => {
