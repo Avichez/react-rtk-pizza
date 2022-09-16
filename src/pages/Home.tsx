@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import qs from "qs";
 import Categories from "../components/Categories";
 import Sort, { sortList } from "../components/Sort";
@@ -9,10 +9,11 @@ import Skeleton from "../components/PizzaItems/Skeleton";
 import Pagination from "../components/Pagination";
 import { setFilters, filterSelector } from "../redux/slices/filterSlice";
 import { fetchPizzas, pizzasList } from "../redux/slices/setPizzaSlice";
+import { useAppDispatch } from "../redux/store";
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const isSearch = useRef(false);
     const isMounted = useRef(false);
     const { items, loadingStatus } = useSelector(pizzasList);
@@ -24,10 +25,7 @@ const Home: React.FC = () => {
         const order = sortItems.order ? `&order=${sortItems.order}` : "";
         const sortBy = sortItems.sort ? `&sortBy=${sortItems.sort}` : "";
 
-        dispatch(
-            // @ts-ignore
-            fetchPizzas({ category, order, sortBy, search, currentPage }),
-        ); // to fix it later on
+        dispatch(fetchPizzas({ category, order, sortBy, search, currentPage }));
     };
 
     // берем данные из url поля и парсим их в параметры, затем передаем через setFilters в наш state обновляя его и отображая контент в соответствии.
@@ -79,7 +77,7 @@ const Home: React.FC = () => {
         // eslint-disable-next-line
     }, [activeCategory, sortItems, currentPage]);
 
-    const pizzas = items.map((item: any) => <PizzaItem key={item.id} {...item} />); // to fix later on
+    const pizzas = items.map((item) => <PizzaItem key={item.id} {...item} />);
 
     return (
         <div className="container">

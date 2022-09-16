@@ -31,7 +31,6 @@ const Sort: React.FC = () => {
 
     useEffect(() => {
         const handleclickOutside = (event: MouseEvent) => {
-            // to fix types
             if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
                 setIsVisible(false);
             }

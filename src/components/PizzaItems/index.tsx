@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem, CartProduct } from "../../redux/slices/cartSlice";
+import { addItem, TCartProduct } from "../../redux/slices/cartSlice";
 import { RootState } from "../../redux/store";
 
-type PizzaItemProps = {
+type TPizzaItemProps = {
     id: string;
     imageUrl: string;
     title: string;
@@ -13,7 +13,7 @@ type PizzaItemProps = {
     types: number[];
 };
 
-const PizzaItem: React.FC<PizzaItemProps> = (props) => {
+const PizzaItem: React.FC<TPizzaItemProps> = (props) => {
     const { id, imageUrl, title, price, sizes, types } = props;
     const dispatch = useDispatch();
     const [pizzaSize, setPizzaSize] = useState(0);
@@ -21,12 +21,12 @@ const PizzaItem: React.FC<PizzaItemProps> = (props) => {
     const typeNames = ["Тонкое", "традиционное"];
     const addedItem = useSelector((state: RootState) =>
         state.cart.items.find((obj) => obj.id === id),
-    ); // to fix later on
+    );
 
     const countAddItem = addedItem ? addedItem.count : 0;
 
     const onclickAdd = () => {
-        const item: CartProduct = {
+        const item: TCartProduct = {
             id,
             title,
             price,

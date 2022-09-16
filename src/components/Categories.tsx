@@ -2,12 +2,12 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setActiveCategory, setCurrentPage } from "../redux/slices/filterSlice";
 
-type CategoriesList = {
+type TCategoriesList = {
     id: number;
     name: string;
 };
 
-const categories: CategoriesList[] = [
+const categories: TCategoriesList[] = [
     { id: 1, name: "Все" },
     { id: 2, name: "Мясные" },
     { id: 3, name: "Вегетарианская" },
@@ -16,12 +16,12 @@ const categories: CategoriesList[] = [
     { id: 6, name: "Закрытые" },
 ];
 
-type CategoriesProps = {
+type TCategoriesProps = {
     activeCategory: number;
 };
 
 // React.FC<CategoriesProps> - Таким образом мы автоматически типизируем props , добавив в <наш type>;
-const Categories: React.FC<CategoriesProps> = (props) => {
+const Categories: React.FC<TCategoriesProps> = (props) => {
     const { activeCategory } = props;
     const dispatch = useDispatch();
 

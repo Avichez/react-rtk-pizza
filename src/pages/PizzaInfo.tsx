@@ -16,6 +16,7 @@ const PizzaInfo: React.FC = () => {
             const { data } = await axios.get(
                 `https://62a8c6edec36bf40bdadcca5.mockapi.io/items/${id}`,
             );
+            console.log(data);
             setPizzaData(data);
         } catch (error) {
             console.log(error, "catch error");

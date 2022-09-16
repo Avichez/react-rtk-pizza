@@ -9,7 +9,7 @@ const Header: React.FC = () => {
     const location = useLocation();
     const { totalPrice, items } = useSelector(cartSelector);
 
-    const totalcount = items.reduce((sum: number, obj: any) => sum + obj.count, 0); // to fix types
+    const totalcount = items.reduce((sum, obj) => sum + obj.count, 0);
 
     return (
         <div className="header">

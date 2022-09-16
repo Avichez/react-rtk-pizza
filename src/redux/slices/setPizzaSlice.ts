@@ -13,10 +13,16 @@ type TProductPizza = {
     types: number[];
 };
 
+enum Status {
+    LOADING = "loading",
+    SUCCESS = "success",
+    ERROR = "error",
+}
+
 interface IPizzaSliceState {
     items: TProductPizza[];
     pagesCount: number;
-    loadingStatus: "loading" | "success" | "error";
+    loadingStatus: Status;
 }
 
 type TPizzasData = {
@@ -24,7 +30,8 @@ type TPizzasData = {
     count: number;
 };
 
-type TFetchPizzasArgs = Record<string, string>;
+// Record позволяет нам указать обобщенно какой обьект к нам придет и с какими типами данных.
+type TFetchPizzasArgs = Record<string, string | number>;
 
 export const fetchPizzas = createAsyncThunk(
     "pizzas/fetchPizzasByProperty",
@@ -41,7 +48,7 @@ export const fetchPizzas = createAsyncThunk(
 const initialState: IPizzaSliceState = {
     items: [],
     pagesCount: 0,
-    loadingStatus: "loading", // loading | success | error
+    loadingStatus: Status.LOADING, // loading | success | error
 };
 
 export const setPizzasSlice = createSlice({
@@ -56,19 +63,19 @@ export const setPizzasSlice = createSlice({
         builder.addCase(fetchPizzas.pending, (state) => {
             state.items = [];
             state.pagesCount = 0;
-            state.loadingStatus = "loading";
+            state.loadingStatus = Status.LOADING;
             console.log("Ожидание");
         });
         builder.addCase(fetchPizzas.fulfilled, (state, action) => {
             state.items = action.payload.items;
             state.pagesCount = Math.ceil(action.payload.count / 4);
-            state.loadingStatus = "success";
+            state.loadingStatus = Status.SUCCESS;
             console.log("Пришел ответ");
         });
         builder.addCase(fetchPizzas.rejected, (state) => {
             state.items = [];
             state.pagesCount = 0;
-            state.loadingStatus = "error";
+            state.loadingStatus = Status.ERROR;
             console.log("Ошибка!");
         });
     },
