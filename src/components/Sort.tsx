@@ -1,7 +1,6 @@
-import React, { useState, useRef } from "react";
-import { useCallback } from "react";
-import { useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { setSortItem, filterSelector } from "../redux/slices/filterSlice";
 
 type TSortList = {

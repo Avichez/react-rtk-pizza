@@ -1,10 +1,9 @@
-import React from "react";
-import styles from "./Search.module.scss";
-import { setCurrentPage, setSearchValue } from "../../redux/slices/filterSlice";
+import React, { useRef, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useRef, useMemo } from "react";
 import debounce from "lodash.debounce";
-import { useState } from "react";
+
+import { setCurrentPage, setSearchValue } from "../../redux/slices/filterSlice";
+import styles from "./Search.module.scss";
 
 const Search: React.FC = () => {
     const [inputValue, setInputValue] = useState("");

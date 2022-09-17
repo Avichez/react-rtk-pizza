@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+
 import { setActiveCategory, setCurrentPage } from "../redux/slices/filterSlice";
 
 type TCategoriesList = {

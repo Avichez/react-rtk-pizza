@@ -1,9 +1,10 @@
 import React from "react";
-import styles from "./Pagination.module.scss";
-import ReactPaginate from "react-paginate";
-import { setCurrentPage, filterSelector } from "../../redux/slices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
+import ReactPaginate from "react-paginate";
+
 import { RootState } from "../../redux/store";
+import { setCurrentPage, filterSelector } from "../../redux/slices/filterSlice";
+import styles from "./Pagination.module.scss";
 
 const Pagination: React.FC = () => {
     const pagesCount = useSelector((state: RootState) => state.pizzas.pagesCount);
